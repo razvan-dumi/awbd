@@ -1,0 +1,26 @@
+<main xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}" layout:fragment="content">
+    <div th:each="order : ${orders}">
+        <h5 th:text="@{'Order ' + ${order.id}}"></h5>
+        <p th:text="@{'Total: ' + ${order.total}}"></p>
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price per unit</th>
+                <th>Line price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, stat : ${order.orderItems}"
+                th:class="${stat.odd}? 'table-light':''">
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.total}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

@@ -1,0 +1,45 @@
+<main xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}" layout:fragment="content">
+    <table class="table table-hover">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price per unit</th>
+            <th>Line price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, stat : ${cartItems}"
+            th:class="${stat.odd}? 'table-light':''">
+            <td th:text="${item.product.name}"></td>
+            <td>
+                <a class="px-1 text-decoration-none" href="#"
+                   th:href="@{'/cart/decrease/' + ${item.product.id}}">
+                    <i class="fa-solid fa-minus"></i>
+                </a>
+                <span th:text="${item.quantity}"></span>
+                <a class="px-1 text-decoration-none" href="#"
+                   th:href="@{'/cart/add/' + ${item.product.id}}">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            </td>
+            <td th:text="${item.product.price}"></td>
+            <td th:text="${item.product.price * item.quantity}"></td>
+            <td>
+                <a class="px-1 text-decoration-none" href="#"
+                   th:href="@{'/cart/remove/' + ${item.product.id}}">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <p th:text="@{'Total: ' + ${total}}"></p>
+        <form th:action="@{'/orders/new'}" method="get">
+            <button class="btn btn-lg btn-primary btn-block" th:disabled="${cartItems.isEmpty()}">Order</button>
+        </form>
+    </div>
+</main>

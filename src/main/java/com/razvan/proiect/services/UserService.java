@@ -18,7 +18,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User registerUser(UserDto userDto) {
+    public void registerUser(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new UserAlreadyExistsException(userDto.getUsername());
         }
@@ -26,10 +26,6 @@ public class UserService {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userRepository.save(user);
-    }
-
-    public void saveUser(User user) {
         userRepository.save(user);
     }
 
