@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: project-app
+  template:
+    metadata:
+      labels:
+        app: project-app
+    spec:
+      containers:
+        - name: project-app
+          image: awbd-app:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
